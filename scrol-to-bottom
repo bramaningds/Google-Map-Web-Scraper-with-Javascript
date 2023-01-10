@@ -1,0 +1,23 @@
+(async function() {
+	const feed = document.querySelector('div[role=feed]')
+
+	const delay = msDelay => new Promise(resolve => setTimeout(resolve, msDelay))
+	const random = (min, max) => Math.floor(Math.random() * max) + min
+	
+	const isEndOfPage = function() {
+		const lastChildOfFeed = document.querySelector('div[role=feed] > div:last-child')
+		return lastChildOfFeed.textContent == "You've reached the end of the list."
+	}
+
+	const isLoading = function() {
+		return !!feed.querySelector('.qjESne')
+	}
+
+	while (true) {
+		if (isEndOfPage()) return
+		
+		feed.scrollTop = feed.scrollHeight
+
+		if (isLoading()) await delay(800 + 100 * random(1, 10))
+	}
+})()
